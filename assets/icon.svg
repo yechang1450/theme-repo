@@ -1,44 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258 258" width="258" height="258">
   <defs>
     <linearGradient id="fused" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#B7A98F"/>
       <stop offset="1" stop-color="#4A4035"/>
     </linearGradient>
     <radialGradient id="glow" cx="50%" cy="40%" r="70%">
-      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.16"/>
       <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect x="0" y="0" width="256" height="256" rx="56" fill="url(#fused)"/>
-  <rect x="0" y="0" width="256" height="256" rx="56" fill="url(#glow)"/>
-  <circle cx="128" cy="128" r="88" fill="none" stroke="#EFEAE0" stroke-width="1"/>
-  <circle cx="128" cy="128" r="78" fill="none" stroke="#E6E1D6" stroke-width="1.2" stroke-dasharray="3 4"/>
-  <g fill="#F0ECE0">
-    <path d="M74 55 l7 -3 -1 8 Z"/>
-    <path d="M182 55 l1 8 -7 -3 Z"/>
-    <path d="M212 150 l-7 4 2 -8 Z"/>
-    <path d="M140 214 l-7 -3 7 -3 Z"/>
-    <path d="M44 150 l-2 -8 7 4 Z"/>
+  <rect x="0" y="0" width="258" height="258" fill="url(#fused)"/>
+  <rect x="0" y="0" width="258" height="258" fill="url(#glow)"/>
+  <g stroke="#F2EDE3" fill="none">
+    <circle cx="129" cy="129" r="89" stroke-width="1"/>
+    <circle cx="129" cy="129" r="78" stroke-width="1.2" stroke-dasharray="3 4"/>
+    <line x1="54.8" y1="104.9" x2="203.2" y2="104.9" stroke-width="1.3"/>
+    <line x1="203.2" y1="104.9" x2="83.1" y2="192.1" stroke-width="1.3"/>
+    <line x1="83.1" y1="192.1" x2="129" y2="51" stroke-width="1.3"/>
+    <line x1="129" y1="51" x2="174.9" y2="192.1" stroke-width="1.3"/>
+    <line x1="174.9" y1="192.1" x2="54.8" y2="104.9" stroke-width="1.3"/>
+    <circle cx="129" cy="51" r="27" stroke-width="2.4"/>
+    <circle cx="203.2" cy="104.9" r="27" stroke-width="2.4"/>
+    <circle cx="174.9" cy="192.1" r="27" stroke-width="2.4"/>
+    <circle cx="83.1" cy="192.1" r="27" stroke-width="2.4"/>
+    <circle cx="54.8" cy="104.9" r="27" stroke-width="2.4"/>
   </g>
-  <g stroke="#EFEAE0" stroke-width="1.4" opacity="0.5">
-    <line x1="53.8" y1="103.9" x2="202.2" y2="103.9"/>
-    <line x1="202.2" y1="103.9" x2="82.1" y2="191.1"/>
-    <line x1="82.1" y1="191.1" x2="128" y2="50"/>
-    <line x1="128" y1="50" x2="173.9" y2="191.1"/>
-    <line x1="173.9" y1="191.1" x2="53.8" y2="103.9"/>
-  </g>
-  <g fill="#2E2A24">
-    <circle cx="128" cy="104" r="3"/>
-    <circle cx="144" cy="150" r="3"/>
-    <circle cx="112" cy="150" r="3"/>
-    <circle cx="154" cy="126" r="3"/>
-    <circle cx="102" cy="126" r="3"/>
-  </g>
-  <g stroke="#FFFFFF" stroke-width="2.2">
-    <circle cx="128" cy="50" r="27" fill="#E5484D"/>
-    <circle cx="202.2" cy="103.9" r="27" fill="#C96A3B"/>
-    <circle cx="173.9" cy="191.1" r="27" fill="#E8C94A"/>
-    <circle cx="82.1" cy="191.1" r="27" fill="#3D8BD8"/>
-    <circle cx="53.8" cy="103.9" r="27" fill="#4C8A3F"/>
+  <g fill="#F2EDE3">
+    <path d="M75 56 l8 -3 -1 8 Z"/>
+    <path d="M183 56 l1 8 -8 -3 Z"/>
+    <path d="M213 151 l-8 4 2 -9 Z"/>
+    <path d="M141 214 l-8 -3 8 -3 Z"/>
+    <path d="M45 151 l-2 -9 8 4 Z"/>
+    <circle cx="129" cy="105" r="3"/>
+    <circle cx="145" cy="151" r="3"/>
+    <circle cx="113" cy="151" r="3"/>
+    <circle cx="155" cy="127" r="3"/>
+    <circle cx="103" cy="127" r="3"/>
   </g>
 </svg>
