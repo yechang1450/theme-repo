@@ -1,7 +1,7 @@
 {
   "name": "theme-repo",
-  "version": "0.1.1+codex.20260831094314",
-  "description": "五行主题仓库：27 个主题色=27 个 skill，图标=主题色，玻璃拟态 token。Use when 需要套用五行主题色、查 token 或新增主题。",
+  "version": "0.1.2+codex.20260831094314",
+  "description": "主题仓库：27 个主题色=27 个 skill，图标=主题色，玻璃拟态 token。Use when 需要套用主题色、查 token 或新增主题。",
   "author": {
     "name": "Yang Wenchàng",
     "url": "https://github.com/yechang1450"
@@ -22,8 +22,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "theme-repo",
-    "shortDescription": "五行主题仓库（27 主题色 = 27 skill）",
-    "longDescription": "27 个五行主题色（木青/火赤/土黄/金白/水黑、5 相生、5 相克、5 三行连续、5 四行连续、1 五行融合、1 湿土生金），每个主题是一个 skill、图标=主题色；统一 token：fire/water/yang/line/radius + glass 玻璃层 + relation/elements。",
+    "shortDescription": "主题仓库（27 主题色 = 27 skill）",
+    "longDescription": "27 个主题色（木青/火赤/土黄/金白/水黑、10 双元素、5 三元素连续、5 四元素连续、1 全元素融合、1 湿土生金），每个主题是一个 skill、图标=主题色；统一 token：fire/water/yang/line/radius + glass 玻璃层 + relation/elements。",
     "developerName": "Yang Wenchàng",
     "category": "Productivity",
     "capabilities": [
@@ -38,7 +38,7 @@
     "logoDark": "./assets/icon.png",
     "screenshots": [],
     "defaultPrompt": [
-      "给这个前端项目套用五行主题",
+      "给这个前端项目套用主题",
       "查某个主题色的设计 token"
     ]
   }

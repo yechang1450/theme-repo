@@ -1,9 +1,9 @@
 ---
 name: flame-soil
-description: 火土成慈 · 火生土，玻璃拟态设计 token。Use when applying the flame-soil theme to a frontend project.
+description: 火土成慈，玻璃拟态设计 token。Use when applying the flame-soil theme to a frontend project.
 ---
 
-# flame-soil · 火土成慈 · 火生土
+# flame-soil · 火土成慈
 
 - 设计 token：`tokens.json`（fire 背景 / water 玻璃面板 / yang 点缀 / line 前景 / radius 圆角 / glass 玻璃层）。
 - 设计理念与配色：见 `THEME.md`。

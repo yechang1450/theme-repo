@@ -1,9 +1,9 @@
 ---
 name: soil-water
-description: 土水池沼 · 土克水，玻璃拟态设计 token。Use when applying the soil-water theme to a frontend project.
+description: 土水池沼，玻璃拟态设计 token。Use when applying the soil-water theme to a frontend project.
 ---
 
-# soil-water · 土水池沼 · 土克水
+# soil-water · 土水池沼
 
 - 设计 token：`tokens.json`（fire 背景 / water 玻璃面板 / yang 点缀 / line 前景 / radius 圆角 / glass 玻璃层）。
 - 设计理念与配色：见 `THEME.md`。

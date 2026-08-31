@@ -1,9 +1,9 @@
 ---
 name: water-wood
-description: 水灵木秀 · 水生木，玻璃拟态设计 token。Use when applying the water-wood theme to a frontend project.
+description: 水灵木秀，玻璃拟态设计 token。Use when applying the water-wood theme to a frontend project.
 ---
 
-# water-wood · 水灵木秀 · 水生木
+# water-wood · 水灵木秀
 
 - 设计 token：`tokens.json`（fire 背景 / water 玻璃面板 / yang 点缀 / line 前景 / radius 圆角 / glass 玻璃层）。
 - 设计理念与配色：见 `THEME.md`。

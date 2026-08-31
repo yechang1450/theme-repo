@@ -1,9 +1,9 @@
 ---
 name: wood-soil
-description: 木土疏通 · 木克土，玻璃拟态设计 token。Use when applying the wood-soil theme to a frontend project.
+description: 木土疏通，玻璃拟态设计 token。Use when applying the wood-soil theme to a frontend project.
 ---
 
-# wood-soil · 木土疏通 · 木克土
+# wood-soil · 木土疏通
 
 - 设计 token：`tokens.json`（fire 背景 / water 玻璃面板 / yang 点缀 / line 前景 / radius 圆角 / glass 玻璃层）。
 - 设计理念与配色：见 `THEME.md`。
