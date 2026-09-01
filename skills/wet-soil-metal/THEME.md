@@ -12,5 +12,5 @@
 
 这是**中的关系**（丑土/辰土湿土生金），比较特殊：金黄色是土生金的颜色，白色是金的颜色，所以是「反着白光的金子」——给湿土和金之间创建一条**土生金的通道**。是正处于****（戊寅 乙丑 丁亥 甲辰）的最重要的能量关系，一直努力从混沌的湿土中集中力量生出自己的价值。
 
-沿用统一 token schema（fire/water/yang/line/radius + relation/elements）：火=湿土冷沙渐变，水=炭黑冷玻璃，阳=金/钢，线=浅金白。
+沿用统一 token schema（flames/water/yang/line/radius + relation/elements）：火=湿土冷沙渐变，水=炭黑冷玻璃，阳=金/钢，线=浅金白。
 - 玻璃规范：磨砂半透（blur 14px / sat 140%）+ 顶部亮底部透 + 白高光描边 + 边缘高光（与 water-wood-flame 一致）。

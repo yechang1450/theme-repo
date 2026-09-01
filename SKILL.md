@@ -8,7 +8,7 @@ description: 主题仓库：27 个主题色即 27 个 skill，每个 skill 的�
 每个主题是一个独立 skill（`skills/<name>/`），内含 `SKILL.md`（套用说明）+ `tokens.json`（设计 token）+ `THEME.md`（设计理念与配色）+ `assets/icon.svg|png`（图标=主题色）。
 
 ## 统一 token schema
-- `fire`：背景渐变（from/to/primary + softBlue/softPink）。
+- `flames`：背景渐变（from/to/primary + softBlue/softPink）。
 - `water`：玻璃面板（glassTop/glassBottom/panelStroke/titleBar/innerBar）。
 - `glass`：玻璃效果层（blur 14px / saturation 140% / highlight / edge / radius）——全部主题统一。
 - `yang`：点缀色（对应主题的能量色）。
@@ -18,7 +18,7 @@ description: 主题仓库：27 个主题色即 27 个 skill，每个 skill 的�
 ## 27 个主题
 
 ### 基础色（单元素）
-- **wood 木（青）** · **fire 火（赤）** · **soil 土（黄）** · **metal 金（白）** · **water 水（黑）**
+- **wood 木（青）** · **flames 火（赤）** · **soil 土（黄）** · **metal 金（白）** · **water 水（黑）**
 
 ### 双元素配色
 - water-wood 水灵木秀（蓝）· wood-flame 木火通明（紫）· flame-soil 火土成慈（棕）· soil-metal 土金毓秀（橙）· metal-water 金白水清（灰）
@@ -37,4 +37,4 @@ description: 主题仓库：27 个主题色即 27 个 skill，每个 skill 的�
 - **five-elements-fused 全元素融合**（融合色 `#97876E`，即本插件图标色）
 
 ## 套用
-读目标主题 skill 的 `tokens.json` 写 CSS 变量：body 用 `fire` 渐变、面板用 `water` 玻璃 + `glass` 磨砂（blur/sat/高光）、点缀用 `yang`、文字用 `line`。
+读目标主题 skill 的 `tokens.json` 写 CSS 变量：body 用 `flames` 渐变、面板用 `water` 玻璃 + `glass` 磨砂（blur/sat/高光）、点缀用 `yang`、文字用 `line`。

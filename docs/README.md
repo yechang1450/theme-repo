@@ -4,11 +4,11 @@
 
 ## 用法
 
-读取目标主题 skill 下的 `tokens.json`（fire/water/yang/line/radius + glass 玻璃层 + relation/elements），按 token 写 CSS 变量即可套用。
+读取目标主题 skill 下的 `tokens.json`（flames/water/yang/line/radius + glass 玻璃层 + relation/elements），按 token 写 CSS 变量即可套用。
 
 ## 主题清单（27）
 
-- 基础：wood / fire / soil / metal / water
+- 基础：wood / flames / soil / metal / water
 - 双元素：water-wood / wood-flame / flame-soil / soil-metal / metal-water / metal-wood / wood-soil / soil-water / water-flame / flame-metal
 - 三元素连续：water-wood-flame / wood-flame-soil / flame-soil-metal / soil-metal-water / metal-water-wood
 - 四元素连续：water-wood-flame-soil / wood-flame-soil-metal / flame-soil-metal-water / soil-metal-water-wood / metal-water-wood-flame

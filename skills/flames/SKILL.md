@@ -1,9 +1,9 @@
 ---
-name: water
-description: 水 · 黑色，玻璃拟态设计 token。Use when applying the water theme to a frontend project.
+name: flames
+description: 火 · 赤色，玻璃拟态设计 token。Use when applying the flames theme to a frontend project.
 ---
 
-# water · 水 · 黑色
+# Flames · 火 · 赤色
 
 - 设计 token：`tokens.json`（flames 背景 / water 玻璃面板 / yang 点缀 / line 前景 / radius 圆角 / glass 玻璃层）。
 - 设计理念与配色：见 `THEME.md`。

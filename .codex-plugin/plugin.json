@@ -1,6 +1,6 @@
 {
   "name": "theme-repo",
-  "version": "0.1.4+codex.20260831094314",
+  "version": "0.1.5+codex.20260831094314",
   "description": "主题仓库：27 个主题色=27 个 skill，图标=主题色，玻璃拟态 token。Use when 需要套用主题色、查 token 或新增主题。",
   "author": {
     "name": "Yang Wenchàng",
@@ -21,9 +21,9 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "theme-repo",
+    "displayName": "Theme Repo",
     "shortDescription": "主题仓库（27 主题色 = 27 skill）",
-    "longDescription": "27 个主题色（木青/火赤/土黄/金白/水黑、10 双元素、5 三元素连续、5 四元素连续、1 全元素融合、1 湿土生金），每个主题是一个 skill、图标=主题色；统一 token：fire/water/yang/line/radius + glass 玻璃层 + relation/elements。",
+    "longDescription": "27 个主题色（木青/火赤/土黄/金白/水黑、10 双元素、5 三元素连续、5 四元素连续、1 全元素融合、1 湿土生金），每个主题是一个 skill、图标=主题色；统一 token：flames/water/yang/line/radius + glass 玻璃层 + relation/elements。",
     "developerName": "Yang Wenchàng",
     "category": "Productivity",
     "capabilities": [
