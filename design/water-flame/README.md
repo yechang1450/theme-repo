@@ -1,7 +1,7 @@
 # water-flame · 水火既济（设计体系）
 
 > 紫色为**丁火**（阴火），黑色为**癸水**（阴水）；阴火与阴水达成完美平衡，即「水火既济」。
-> 用于 codex-tui-orchestrator / 80 / 81 / 82 等 UI 的统一视觉语言。（原名 ji-ji，已更名 water-flame）
+> 用于 agent-tui-orchestrator / 80 / 81 / 82 等 UI 的统一视觉语言。（原名 ji-ji，已更名 water-flame）
 
 ## 命名
 - `water-flame`（取自「水火既济」）：**紫(火) + 黑(水) 平衡**。
