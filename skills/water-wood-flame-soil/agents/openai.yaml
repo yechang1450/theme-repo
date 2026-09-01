@@ -1,0 +1,9 @@
+interface:
+  display_name: "Water Wood Flame Soil"
+  short_description: "水木火土：水→木→火→土 四行"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#C98F4A"
+  default_prompt: "Use $theme-repo:water-wood-flame-soil to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

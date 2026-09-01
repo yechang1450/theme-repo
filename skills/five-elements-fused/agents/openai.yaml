@@ -1,0 +1,9 @@
+interface:
+  display_name: "Five Elements Fused"
+  short_description: "多元素融合：木青火赤土黄金白水黑融合为一（theme-repo 插件图标色）"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#B7A98F"
+  default_prompt: "Use $theme-repo:five-elements-fused to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

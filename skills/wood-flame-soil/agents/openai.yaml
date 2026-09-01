@@ -1,0 +1,9 @@
+interface:
+  display_name: "Wood Flame Soil"
+  short_description: "木火土：木（青）→火（赤）→土（黄），融合态"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#D97A5A"
+  default_prompt: "Use $theme-repo:wood-flame-soil to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

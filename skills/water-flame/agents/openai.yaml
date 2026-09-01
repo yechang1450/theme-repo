@@ -1,0 +1,9 @@
+interface:
+  display_name: "Water Flame"
+  short_description: "水火既济：水黑与火赤在对立中达成平衡"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#D9605F"
+  default_prompt: "Use $theme-repo:water-flame to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

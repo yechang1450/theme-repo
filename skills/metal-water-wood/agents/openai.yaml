@@ -1,0 +1,9 @@
+interface:
+  display_name: "Metal Water Wood"
+  short_description: "金水木：金（白）→水（黑）→木（青），融合态"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#9FC9B5"
+  default_prompt: "Use $theme-repo:metal-water-wood to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

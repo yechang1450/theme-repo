@@ -1,0 +1,9 @@
+interface:
+  display_name: "Flames"
+  short_description: "火 · 赤色：火元素，赤焰炽烈"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#F0747A"
+  default_prompt: "Use $theme-repo:flames to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

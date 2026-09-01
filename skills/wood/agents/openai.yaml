@@ -1,0 +1,9 @@
+interface:
+  display_name: "Wood"
+  short_description: "木 · 青色：木元素，青绿生发"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#5BC9A0"
+  default_prompt: "Use $theme-repo:wood to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,9 @@
+interface:
+  display_name: "Flame Soil Metal"
+  short_description: "火土金：火（赤）→土（黄）→金（白），融合态"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#E0A96A"
+  default_prompt: "Use $theme-repo:flame-soil-metal to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

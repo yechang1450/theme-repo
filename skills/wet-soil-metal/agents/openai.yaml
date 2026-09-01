@@ -1,0 +1,9 @@
+interface:
+  display_name: "Wet Soil Metal"
+  short_description: "湿土生金：丑土（己土+）与辰土（戊土+乙木癸水）整合成湿土容器，金属通道，金反白光（当前最重要的能量关系）"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#C6BEB0"
+  default_prompt: "Use $theme-repo:wet-soil-metal to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

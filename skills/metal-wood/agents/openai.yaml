@@ -1,0 +1,9 @@
+interface:
+  display_name: "Metal Wood"
+  short_description: "金木栋梁：金白与木青在天平两侧达成平衡，如栋梁"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#D9DEE4"
+  default_prompt: "Use $theme-repo:metal-wood to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

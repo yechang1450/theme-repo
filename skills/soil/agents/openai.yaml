@@ -1,0 +1,9 @@
+interface:
+  display_name: "Soil"
+  short_description: "土 · 黄色：土元素，黄土厚重"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#EBC26A"
+  default_prompt: "Use $theme-repo:soil to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,9 @@
+interface:
+  display_name: "Soil Metal"
+  short_description: "土金毓秀：土黄生金白，融合为橙"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#F0A45C"
+  default_prompt: "Use $theme-repo:soil-metal to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

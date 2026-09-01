@@ -1,0 +1,9 @@
+interface:
+  display_name: "Wood Flame Soil Metal"
+  short_description: "木火土金：木→火→土→金 四行"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#E0A96A"
+  default_prompt: "Use $theme-repo:wood-flame-soil-metal to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

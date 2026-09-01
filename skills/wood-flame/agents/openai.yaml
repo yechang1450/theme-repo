@@ -1,0 +1,9 @@
+interface:
+  display_name: "Wood Flame"
+  short_description: "木火通明：木青生火赤，融合为紫"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#8E63F2"
+  default_prompt: "Use $theme-repo:wood-flame to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,9 @@
+interface:
+  display_name: "Wood Soil"
+  short_description: "木土疏通：木青与土黄平衡，如疏通渠道"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#7FC9A8"
+  default_prompt: "Use $theme-repo:wood-soil to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true

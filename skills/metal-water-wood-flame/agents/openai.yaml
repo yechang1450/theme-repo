@@ -1,0 +1,9 @@
+interface:
+  display_name: "Metal Water Wood Flame"
+  short_description: "金水木火：金→水→木→火 四行"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.svg"
+  brand_color: "#B06A6E"
+  default_prompt: "Use $theme-repo:metal-water-wood-flame to apply this theme to a frontend project."
+policy:
+  allow_implicit_invocation: true
