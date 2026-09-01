@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268 268" width="268" height="268">
+<defs>
+<linearGradient id="fused" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B7A98F"/><stop offset="1" stop-color="#4A4035"/></linearGradient>
+<radialGradient id="glow" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#FFFFFF" stop-opacity="0.16"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="268" height="268" fill="url(#fused)"/>
+<rect width="268" height="268" fill="url(#glow)"/>
+<g stroke="#F2EDE3" fill="none">
+<circle cx="134" cy="134" r="99" stroke-width="2.3"/>
+<circle cx="134" cy="134" r="93" stroke-width="1.5" stroke-dasharray="2.4 4" opacity="0.75"/>
+<g stroke-width="2" opacity="0.85">M134,54 L181,198.7 M210.1,109.3 L87,198.7 M181,198.7 L57.9,109.3 M87,198.7 L134,54 M57.9,109.3 L210.1,109.3</g>
+<g stroke-width="2.7">M134,54 L210.1,109.3 M210.1,109.3 L181,198.7 M181,198.7 L87,198.7 M87,198.7 L57.9,109.3 M57.9,109.3 L134,54</g>
+<circle cx="134.0" cy="54.0" r="30" stroke-width="3.5"/> <circle cx="210.1" cy="109.3" r="30" stroke-width="3.5"/> <circle cx="181.0" cy="198.7" r="30" stroke-width="3.5"/> <circle cx="87.0" cy="198.7" r="30" stroke-width="3.5"/> <circle cx="57.9" cy="109.3" r="30" stroke-width="3.5"/>
+</g>
+<g fill="#F2EDE3" stroke="none"><path d="M171.0 80.6 l18 0 l-6 -6 l6 6 l-6 6" transform="rotate(36.0 172.0 81.6)"/> <path d="M194.6 153.0 l18 0 l-6 -6 l6 6 l-6 6" transform="rotate(108.0 195.6 154.0)"/> <path d="M133.0 197.7 l18 0 l-6 -6 l6 6 l-6 6" transform="rotate(180.0 134.0 198.7)"/> <path d="M71.4 153.0 l18 0 l-6 -6 l6 6 l-6 6" transform="rotate(-108.0 72.4 154.0)"/> <path d="M95.0 80.6 l18 0 l-6 -6 l6 6 l-6 6" transform="rotate(-36.0 96.0 81.6)"/><circle cx="134.0" cy="94.0" r="3.8"/> <circle cx="172.0" cy="121.6" r="3.8"/> <circle cx="157.5" cy="166.4" r="3.8"/> <circle cx="110.5" cy="166.4" r="3.8"/> <circle cx="96.0" cy="121.6" r="3.8"/><circle cx="134" cy="134" r="4"/></g>
+</svg>
