@@ -1,6 +1,6 @@
 ---
 name: theme-repo
-description: 主题仓库：27 个主题色即 27 个 skill，每个 skill 的图标=对应主题色，统一玻璃拟态 token。Use when 需要给前端项目套用主题色、查看主题设计 token，或新增/管理主题。
+description: 主题仓库：28 个主题色即 28 个 skill，每个 skill 的图标=对应主题色，统一玻璃拟态 token。Use when 需要给前端项目套用主题色、查看主题设计 token，或新增/管理主题。
 ---
 
 # theme-repo · 主题仓库
@@ -15,7 +15,7 @@ description: 主题仓库：27 个主题色即 27 个 skill，每个 skill 的�
 - `line`：前景/文字色；`radius`：圆角。
 - 元数据：`relation`（element/generation/overcoming/continuous-generation/wet-earth-generation/fused）+ `elements`（数组）。
 
-## 27 个主题
+## 28 个主题
 
 ### 基础色（单元素）
 - **wood 木（青）** · **flames 火（赤）** · **soil 土（黄）** · **metal 金（白）** · **water 水（黑）**
@@ -32,6 +32,7 @@ description: 主题仓库：27 个主题色即 27 个 skill，每个 skill 的�
 
 ### 特殊配色
 - **wet-soil-metal 湿土生金**（湿润土壤生金属，反白光）
+- **深空紫蓝玻璃拟态**（深空蓝紫渐变 + 半透明毛玻璃面板 + 霓虹蓝紫点缀，定制主题）
 
 ### 全元素融合
 - **five-elements-fused 全元素融合**（融合色 `#97876E`，即本插件图标色）

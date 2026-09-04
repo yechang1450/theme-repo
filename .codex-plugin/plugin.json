@@ -1,9 +1,9 @@
 {
   "name": "theme-repo",
-  "version": "0.1.14+codex.20260903150000",
-  "description": "主题仓库：28 个主题色=28 个 skill，图标=主题色，玻璃拟态 token。Use when 需要套用主题色、查 token 或新增主题。",
+  "version": "0.1.14+codex.20260904091750",
+  "description": "\u4e3b\u9898\u4ed3\u5e93\uff1a28 \u4e2a\u4e3b\u9898\u8272=28 \u4e2a skill\uff0c\u56fe\u6807=\u4e3b\u9898\u8272\uff0c\u73bb\u7483\u62df\u6001 token\u3002Use when \u9700\u8981\u5957\u7528\u4e3b\u9898\u8272\u3001\u67e5 token \u6216\u65b0\u589e\u4e3b\u9898\u3002",
   "author": {
-    "name": "Yang Wenchàng",
+    "name": "Yang Wench\u00e0ng",
     "url": "https://github.com/yechang1450"
   },
   "homepage": "https://github.com/yechang1450/theme-repo",
@@ -22,9 +22,9 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Theme Repo",
-    "shortDescription": "主题仓库（27 主题色 = 27 skill）",
-    "longDescription": "28 个主题色（木青/火赤/土黄/金白/水黑、10 双元素、5 三元素连续、5 四元素连续、1 全元素融合、1 湿土生金、1 定制日期(20260903 深空紫蓝)），每个主题是一个 skill、图标=主题色；统一 token：flames/water/yang/line/radius + glass 玻璃层 + relation/elements。",
-    "developerName": "Yang Wenchàng",
+    "shortDescription": "\u4e3b\u9898\u4ed3\u5e93\uff0827 \u4e3b\u9898\u8272 = 27 skill\uff09",
+    "longDescription": "28 \u4e2a\u4e3b\u9898\u8272\uff08\u6728\u9752/\u706b\u8d64/\u571f\u9ec4/\u91d1\u767d/\u6c34\u9ed1\u300110 \u53cc\u5143\u7d20\u30015 \u4e09\u5143\u7d20\u8fde\u7eed\u30015 \u56db\u5143\u7d20\u8fde\u7eed\u30011 \u5168\u5143\u7d20\u878d\u5408\u30011 \u6e7f\u571f\u751f\u91d1\u30011 \u5b9a\u5236\u4e3b\u9898(\u6df1\u7a7a\u7d2b\u84dd\u73bb\u7483\u62df\u6001)\uff09\uff0c\u6bcf\u4e2a\u4e3b\u9898\u662f\u4e00\u4e2a skill\u3001\u56fe\u6807=\u4e3b\u9898\u8272\uff1b\u7edf\u4e00 token\uff1aflames/water/yang/line/radius + glass \u73bb\u7483\u5c42 + relation/elements\u3002",
+    "developerName": "Yang Wench\u00e0ng",
     "category": "Productivity",
     "capabilities": [
       "Read"
@@ -38,8 +38,8 @@
     "logoDark": "./assets/icon.png",
     "screenshots": [],
     "defaultPrompt": [
-      "给这个前端项目套用主题",
-      "查某个主题色的设计 token"
+      "\u7ed9\u8fd9\u4e2a\u524d\u7aef\u9879\u76ee\u5957\u7528\u4e3b\u9898",
+      "\u67e5\u67d0\u4e2a\u4e3b\u9898\u8272\u7684\u8bbe\u8ba1 token"
     ]
   }
 }
