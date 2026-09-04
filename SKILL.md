@@ -1,6 +1,6 @@
 ---
 name: theme-repo
-description: 主题仓库：28 个主题色即 28 个 skill，每个 skill 的图标=对应主题色，统一玻璃拟态 token。Use when 需要给前端项目套用主题色、查看主题设计 token，或新增/管理主题。
+description: 主题仓库：28 个主题色即 28 个 skill，每个 skill 的图标=对应主题色，统一渐变+半透明毛玻璃 token。Use when 需要给前端项目套用主题色、查看主题设计 token，或新增/管理主题。
 ---
 
 # theme-repo · 主题仓库
@@ -8,9 +8,9 @@ description: 主题仓库：28 个主题色即 28 个 skill，每个 skill 的�
 每个主题是一个独立 skill（`skills/<name>/`），内含 `SKILL.md`（套用说明）+ `tokens.json`（设计 token）+ `THEME.md`（设计理念与配色）+ `assets/icon.svg|png`（图标=主题色）。
 
 ## 统一 token schema
-- `flames`：背景渐变（from/to/primary + softBlue/softPink）。
-- `water`：玻璃面板（glassTop/glassBottom/panelStroke/titleBar/innerBar）。
-- `glass`：玻璃效果层（blur 14px / saturation 140% / highlight / edge / radius）——全部主题统一。
+- `flames`：背景渐变——`from` → `to` + `primary` 主色（softBlue/softPink 为柔光）。
+- `water`：半透明毛玻璃面板——glassTop `rgba(255,255,255,.10)` → glassBottom 主题深色 `rgba(...,.55)`，panelStroke `rgba(255,255,255,.18)` / titleBar `.08` / innerBar `.06`。
+- `glass`：玻璃效果层（blur / saturation / highlight / edge / radius）。
 - `yang`：点缀色（对应主题的能量色）。
 - `line`：前景/文字色；`radius`：圆角。
 - 元数据：`relation`（element/generation/overcoming/continuous-generation/wet-earth-generation/fused）+ `elements`（数组）。
@@ -38,4 +38,10 @@ description: 主题仓库：28 个主题色即 28 个 skill，每个 skill 的�
 - **five-elements-fused 全元素融合**（融合色 `#97876E`，即本插件图标色）
 
 ## 套用
-读目标主题 skill 的 `tokens.json` 写 CSS 变量：body 用 `flames` 渐变、面板用 `water` 玻璃 + `glass` 磨砂（blur/sat/高光）、点缀用 `yang`、文字用 `line`。
+读目标主题 skill 的 `tokens.json` 写 CSS 变量：body 用 `flames.from → flames.to` 渐变（`flames.primary` 主色）、面板用 `water` 半透明毛玻璃 + `glass` 磨砂（blur/sat/高光）、点缀用 `yang`、文字用 `line`。
+
+## Web 主题自动组合（不永久入库，保持清爽）
+当用户需要"设计/套用一个 Web 主题"而没指定具体现有主题时，本插件**自行从本仓库主题色中挑选组合**出一种新的 theme color：
+- **组合规则（与现有主题统一风格）**：从现有主题的 `flames`（背景渐变主色）里选 1 个做主背景，叠加 `water` 半透明毛玻璃面板 + `glass` 磨砂层；`yang` 取与主色呼应的点缀、`line` 取对比明显的前景、`radius` 用统一圆角。图标/名称沿用 `relation` + `elements` 元数据风格。
+- **只用于当前任务**：组合出的新主题颜色**只在本次设计/套用中使用**，产出给当前前端项目；**不**新增一个永久 skill、**不**写入 `skills/` 目录（避免每次组合导致仓库无限膨胀）。若项目要求沉淀，可让用户显式要求"存为新主题 skill"再入库。
+- 命名：组合主题可用 `auto-<主色元素>-<点缀元素>` 风格示意（如 `auto-fire-water`），仅作当前任务命名，不入库。

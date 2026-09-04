@@ -4,6 +4,8 @@
 
 > 通用性：主题以**标准 Markdown + token 文件**（`THEME.md` / `tokens.json`）描述，任何前端/UI 框架都能按这套 token 落地，不绑定特定 agent。目录里的 `.codex-plugin/` 仅是 Codex 安装清单。
 
+统一 token：`flames.primary/from/to`（背景渐变）、`water`（半透明毛玻璃 rgba 面板）、`glass`（blur/sat/highlight/edge/radius）、`yang`（点缀）、`line`（前景）。
+
 ## 主题
 
 按五行元素融合命名，覆盖冷暖与中性风格：
