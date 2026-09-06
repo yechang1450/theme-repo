@@ -1,9 +1,11 @@
 ---
 name: theme-repo
-description: 主题仓库：28 个主题色即 28 个 skill，每个 skill 的图标=对应主题色，统一渐变+半透明毛玻璃 token。Use when 需要给前端项目套用主题色、查看主题设计 token，或新增/管理主题。
+description: 主题仓库，含通用取色入口和28个主题技能。Use whenever a task needs theme colors or coordinated palettes, or when viewing tokens and managing themes.
 ---
 
 # theme-repo · 主题仓库
+
+凡需要主题配色，先使用 [theme-color](skills/theme-color/SKILL.md) 通用入口，再读取目标主题资源。没有指定主题名时也适用；保留已有视觉约束，不将取色扩大为整体换肤。
 
 每个主题是一个独立 skill（`skills/<name>/`），内含 `SKILL.md`（套用说明）+ `tokens.json`（设计 token）+ `THEME.md`（设计理念与配色）+ `assets/icon.svg|png`（图标=主题色）。
 
