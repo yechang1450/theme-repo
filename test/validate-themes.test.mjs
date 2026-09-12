@@ -17,5 +17,7 @@ test('theme validator accepts all 28 themes and the shared theme-color entry', (
   const report = JSON.parse(result.stdout);
   assert.equal(report.themeCount, 28);
   assert.deepEqual(report.sharedEntries, ['theme-color']);
+  assert.equal(report.metadataCount, 28);
+  assert.equal(report.manifestValid, true);
   assert.equal(report.invalid.length, 0);
 });

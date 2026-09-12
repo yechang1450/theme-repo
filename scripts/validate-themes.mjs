@@ -27,6 +27,24 @@ const sharedEntries = entries.filter((name) => name === 'theme-color');
 const themeNames = entries.filter((name) => name !== 'theme-color');
 const invalid = [];
 
+let manifestValid = false;
+try {
+  const manifest = JSON.parse(fs.readFileSync(path.join(repoRoot, '.codex-plugin', 'plugin.json'), 'utf8'));
+  manifestValid = Boolean(manifest.name === 'theme-repo'
+    && manifest.version
+    && manifest.license === 'MIT'
+    && manifest.skills === './skills/'
+    && manifest.homepage === 'https://github.com/yechang1450/theme-repo'
+    && manifest.interface?.websiteURL === manifest.homepage
+    && manifest.interface?.privacyPolicyURL?.endsWith('/docs/privacy.md')
+    && manifest.interface?.termsOfServiceURL?.endsWith('/docs/terms.md'));
+  if (!manifestValid) invalid.push('plugin.json: public metadata is incomplete or inconsistent');
+} catch (error) {
+  invalid.push(`plugin.json: invalid JSON (${error.message})`);
+}
+
+let metadataCount = 0;
+
 for (const name of themeNames) {
   const themeRoot = path.join(skillsRoot, name);
   for (const relativePath of requiredFiles) {
@@ -48,11 +66,21 @@ for (const name of themeNames) {
   } catch (error) {
     invalid.push(`${name}: invalid tokens.json (${error.message})`);
   }
+
+  const metadata = fs.readFileSync(path.join(themeRoot, 'agents', 'openai.yaml'), 'utf8');
+  const expectedPrompt = `default_prompt: "Use $theme-repo:${name} to apply this theme to a frontend project."`;
+  if (!metadata.includes(expectedPrompt)) invalid.push(`${name}: default_prompt does not match directory name`);
+  if (!metadata.includes('icon_small: "./assets/icon.png"') || !metadata.includes('icon_large: "./assets/icon.svg"')) {
+    invalid.push(`${name}: icon metadata is incomplete`);
+  }
+  metadataCount += 1;
 }
 
 const report = {
   themeCount: themeNames.length,
   sharedEntries,
+  metadataCount,
+  manifestValid,
   invalid,
 };
 
