@@ -2,6 +2,8 @@
 
 主题仓库：1 个通用取色入口 + 28 个主题色，每个主题一个独立 skill，图标=对应主题色；统一「渐变 + 半透明毛玻璃」设计 token。
 
+`skills/` 下共有 29 个目录：`theme-color` 是通用入口，其余 28 个目录是实际主题。
+
 ## 用法
 
 先通过 [theme-color 通用取色入口](../skills/theme-color/SKILL.md) 选择或组合配色，再读取目标主题 skill 下的 `tokens.json`（flames from/to/primary 背景渐变 + water 半透明毛玻璃 + glass 玻璃层 + yang 点缀 + line 前景 + radius + relation/elements），按 token 写 CSS 变量即可套用。

@@ -1,6 +1,6 @@
 # theme-repo
 
-一个**玻璃拟态主题 token 仓库**：为前端项目提供一套"五行元素融合 / 毛玻璃"风格的、可复用的设计 token（颜色、背景、阴影、渐变等）。
+一个**玻璃拟态主题 token 仓库**：为前端项目提供一套"五行元素融合 / 毛玻璃"风格的、可复用的设计 token（颜色、背景、阴影、渐变等）。仓库包含 28 个主题 skill，以及 1 个用于统一选色的 `theme-color` 入口。
 
 > 通用性：主题以**标准 Markdown + token 文件**（`THEME.md` / `tokens.json`）描述，任何前端/UI 框架都能按这套 token 落地，不绑定特定 agent。目录里的 `.codex-plugin/` 仅是 Codex 安装清单。
 
@@ -25,5 +25,14 @@
 凡需要主题配色，先使用 [theme-color 通用取色技能](skills/theme-color/SKILL.md)，再读取选中主题的 `SKILL.md`、`tokens.json` 和 `THEME.md` 取色或组合。适用于界面、组件、图表、文档和视觉作品，不要求用户先说出主题名。
 
 保留用户指定品牌色与项目现有视觉约束。颜色映射到现有主题变量或色板，检查实际背景下的可读性；只需要配色时不强制增加玻璃效果或改变布局。组合仅保存在当前项目，除非明确要求，不新增永久主题。
+
+## 本地校验
+
+无需安装第三方依赖即可运行目录和 token 校验：
+
+```powershell
+node scripts/validate-themes.mjs
+node --test test/validate-themes.test.mjs
+```
 
 插件现有 28 个主题技能，加 1 个通用取色入口。示例：`flame-soil` 提供“火土成慈”的暖色组合。

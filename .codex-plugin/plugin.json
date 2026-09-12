@@ -30,8 +30,8 @@
       "Read"
     ],
     "websiteURL": "https://github.com/yechang1450/theme-repo",
-    "privacyPolicyURL": "https://github.com/yechang1450/theme-repo",
-    "termsOfServiceURL": "https://github.com/yechang1450/theme-repo",
+    "privacyPolicyURL": "https://github.com/yechang1450/theme-repo/blob/master/docs/privacy.md",
+    "termsOfServiceURL": "https://github.com/yechang1450/theme-repo/blob/master/docs/terms.md",
     "brandColor": "#97876E",
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/icon.png",
