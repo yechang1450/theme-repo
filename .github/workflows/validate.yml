@@ -1,0 +1,25 @@
+name: Validate theme repository
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Validate theme structure
+        run: node scripts/validate-themes.mjs
+      - name: Run tests
+        run: node --test test/*.test.mjs
