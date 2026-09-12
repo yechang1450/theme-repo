@@ -1,23 +1,71 @@
 # theme-repo
 
-主题仓库：1 个通用取色入口 + 28 个主题色，每个主题一个独立 skill，图标=对应主题色；统一「渐变 + 半透明毛玻璃」设计 token。
+28 themes and a shared `theme-color` entry for interfaces, charts, documents, and visual work. The repository provides composable palettes inspired by the five elements, with optional glass effects.
 
-`skills/` 下共有 29 个目录：`theme-color` 是通用入口，其余 28 个目录是实际主题。
+[简体中文](../README.md) · [Theme selection guide](../skills/theme-color/SKILL.md) · [Validation workflow](https://github.com/yechang1450/theme-repo/actions/workflows/validate.yml)
 
-## 用法
+Design tokens are reusable values for colors, gradients, panels, and visual effects. Each theme includes Markdown guidance, a JSON token file, skill metadata, and icons. Codex can use the skill instructions; other tools can read the files directly without a framework dependency. The theme guidance is primarily in Chinese.
 
-先通过 [theme-color 通用取色入口](../skills/theme-color/SKILL.md) 选择或组合配色，再读取目标主题 skill 下的 `tokens.json`（flames from/to/primary 背景渐变 + water 半透明毛玻璃 + glass 玻璃层 + yang 点缀 + line 前景 + radius + relation/elements），按 token 写 CSS 变量即可套用。
+## Use with Codex
 
-## 主题清单（28）
+With the plugin installed, start with [theme-color](../skills/theme-color/SKILL.md). It guides theme selection and composition, then directs the assistant to read the selected theme's `SKILL.md`, `THEME.md`, and `tokens.json`.
 
-- 基础：wood / flames / soil / metal / water
-- 双元素：water-wood / wood-flame / flame-soil / soil-metal / metal-water / metal-wood / wood-soil / soil-water / water-flame / flame-metal
-- 三元素连续：water-wood-flame / wood-flame-soil / flame-soil-metal / soil-metal-water / metal-water-wood
-- 四元素连续：water-wood-flame-soil / wood-flame-soil-metal / flame-soil-metal-water / soil-metal-water-wood / metal-water-wood-flame
-- 特殊配色：wet-soil-metal
-- 定制主题：深空紫蓝玻璃拟态
-- 全元素融合：five-elements-fused（#97876E，插件图标色）
+Example requests:
 
-## 作者
+```text
+Use theme-repo to choose colors for this page while preserving its layout and brand colors.
+Read the flame-soil theme and choose background, text, and accent colors for the charts in this report.
+Use theme-color to compose a palette from existing themes and record the token sources.
+```
 
-Yang Wenchàng（https://github.com/yechang1450）
+## Read the files directly
+
+```sh
+git clone https://github.com/yechang1450/theme-repo.git
+cd theme-repo
+```
+
+For example, read the [flame-soil guide](../skills/flame-soil/THEME.md) and [tokens](../skills/flame-soil/tokens.json), then map the values to your existing style variables or palette. Reading the files requires no script execution or third-party dependencies. Cloning downloads the repository; it does not install a Codex plugin automatically.
+
+## Applying a palette
+
+- Preserve brand colors, the current visual style, and the target light or dark mode.
+- Use glass effects, gradients, and rounded corners only when the work needs them.
+- Read token values from the selected files and document any derived adjustments.
+- Check readability and state distinctions against the final background. Structural validation is not an accessibility certification.
+- Keep composed palettes in the current project. Add a permanent repository theme only when explicitly requested.
+
+## Themes and token fields
+
+The `skills/` directory contains 29 directories: 28 themes and one shared selection entry. See the [full theme catalog](../README.md#主题目录) for links to every theme. The five elements — wood, fire, earth, metal, and water — organize theme names and design ideas.
+
+| Field | Purpose |
+| --- | --- |
+| `flames.primary/from/to` | Primary color and background gradient |
+| `water` | Translucent panels and borders |
+| `glass` | Blur, saturation, highlights, and glass edges |
+| `yang` | Accent colors |
+| `line` | Foreground and text color |
+| `radius` | Corner radius |
+| `relation` / `elements` | Theme relationship and element metadata |
+
+Use the actual selected token file as the reference and apply only the fields you need.
+
+## Validate locally
+
+Maintainer validation uses Node.js; the workflow currently covers Node.js 20 and 22. From the repository root, without installing npm dependencies:
+
+```sh
+node scripts/validate-themes.mjs
+node --test test/validate-themes.test.mjs
+```
+
+The current checks cover theme counts, required documents and top-level token fields, theme names, selected skill metadata, and plugin manifest fields. They do not render designs or establish readability in the final work.
+
+## Contributing and license
+
+[Contributing](../CONTRIBUTING.md) · [Issues](https://github.com/yechang1450/theme-repo/issues) · [Security](../SECURITY.md) · [Changelog](../CHANGELOG.md)
+
+Licensed under the [MIT License](../LICENSE). Author: [Yang Wenchàng](https://github.com/yechang1450).
+
+[Privacy](privacy.md) · [Terms](terms.md)

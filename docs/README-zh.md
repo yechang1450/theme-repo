@@ -1,23 +1,17 @@
-# theme-repo
+# theme-repo · 中文文档入口
 
-主题仓库：1 个通用取色入口 + 28 个主题色，每个主题一个独立 skill，图标=对应主题色；统一「渐变 + 半透明毛玻璃」设计 token。
+28 个主题 + theme-color 统一取色入口，面向界面、图表、文档与视觉作品；提供可组合的五行配色与玻璃拟态设计变量。
 
-`skills/` 下共有 29 个目录：`theme-color` 是通用入口，其余 28 个目录是实际主题。
+完整中文说明维护在[仓库首页 README](../README.md)，这里保留常用入口，避免主题清单在多处更新不同步。
 
-## 用法
+- [使用方法](../README.md#使用)
+- [应用原则](../README.md#应用原则)
+- [28 个主题目录](../README.md#主题目录)
+- [文件与字段](../README.md#文件与字段)
+- [本地校验](../README.md#本地校验)
+- [theme-color 统一取色技能](../skills/theme-color/SKILL.md)
+- [贡献指南](../CONTRIBUTING.md)
+- [安全报告](../SECURITY.md)
+- [English README](README.md)
 
-先通过 [theme-color 通用取色入口](../skills/theme-color/SKILL.md) 选择或组合配色，再读取目标主题 skill 下的 `tokens.json`（flames from/to/primary 背景渐变 + water 半透明毛玻璃 + glass 玻璃层 + yang 点缀 + line 前景 + radius + relation/elements），按 token 写 CSS 变量即可套用。
-
-## 主题清单（28）
-
-- 基础：wood / flames / soil / metal / water
-- 双元素：water-wood / wood-flame / flame-soil / soil-metal / metal-water / metal-wood / wood-soil / soil-water / water-flame / flame-metal
-- 三元素连续：water-wood-flame / wood-flame-soil / flame-soil-metal / soil-metal-water / metal-water-wood
-- 四元素连续：water-wood-flame-soil / wood-flame-soil-metal / flame-soil-metal-water / soil-metal-water-wood / metal-water-wood-flame
-- 特殊配色：wet-soil-metal
-- 定制主题：深空紫蓝玻璃拟态
-- 全元素融合：five-elements-fused（#97876E，插件图标色）
-
-## 作者
-
-Yang Wenchàng（https://github.com/yechang1450）
+[隐私说明](privacy.md) · [使用条款](terms.md) · [MIT License](../LICENSE)
