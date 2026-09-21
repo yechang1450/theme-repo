@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.20
+
+- 英文文档补齐插件管理器安装路径：`docs/README.md` 新增 "Install in Codex (plugin manager)"（干净分发、个人 marketplace 条目、`source.path` 相对 `<home>` 解析、新对话才加载技能）。
+- 英文校验命令对齐 `node --test test/*.test.mjs`，并说明分发内会重跑主题校验、分发测试会确认不含 `.git/` 且重建会清掉陈旧文件。
+- 中文 README 的一键流程与 marketplace 样例保持不变（0.1.19 引入）。
+
 ## 0.1.19
 
 - 新增 `scripts/publish-dist.mjs`：从工作树重建 `<克隆父目录>/dist/theme-repo` 干净分发（排除 `.git/`、`temp/`、`node_modules/` 等），并在分发里重跑主题校验后才算成功。
