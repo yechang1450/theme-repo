@@ -20,6 +20,42 @@
 用 theme-color 从现有主题中组合配色，并注明使用的主题和 token 来源。
 ```
 
+### 在 Codex 中安装（插件管理器）
+
+主题技能要在新对话里自动加载，需要先注册进 Codex 的插件管理器。个人 marketplace 文件位于 `<home>/.agents/plugins/marketplace.json`（Codex 隐式发现），条目指向**干净分发**而不是工作树——管理器会把插件目录整体复制进安装缓存，指向工作树会连 `.git/` 一起复制（本机实测：theme-repo 的缓存因此多出约 2.8 MB 的 Git 元数据）。
+
+```powershell
+& {
+  $ErrorActionPreference = 'Stop'
+  $Repo = Join-Path $HOME 'plugins\theme-repo'       # 你的克隆位置；首次安装时改为 git clone
+  git -C $Repo pull --ff-only
+  if ($LASTEXITCODE -ne 0) { throw '更新失败。' }
+  node (Join-Path $Repo 'scripts/publish-dist.mjs')  # 重建 <克隆父目录>/dist/theme-repo 并自校验
+  if ($LASTEXITCODE -ne 0) { throw '分发重建失败。' }
+  codex plugin add theme-repo@personal               # 注册并安装
+  if ($LASTEXITCODE -ne 0) { throw '安装失败。' }
+}
+```
+
+首次安装时 marketplace 文件可能还不存在，至少要包含本插件条目（`source.path` 相对 `<home>` 解析，不是相对 `marketplace.json` 所在目录）：
+
+```json
+{
+  "name": "personal",
+  "interface": { "displayName": "Personal" },
+  "plugins": [
+    {
+      "name": "theme-repo",
+      "source": { "source": "local", "path": "./plugins/dist/theme-repo" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}
+```
+
+装完后**新开一个 Codex 对话**技能才会加载；`codex plugin list` 里应显示 `theme-repo@personal  installed, enabled`。
+
 ### 直接读取主题文件
 
 ```sh
@@ -73,10 +109,10 @@ cd theme-repo
 
 ```sh
 node scripts/validate-themes.mjs
-node --test test/validate-themes.test.mjs
+node --test test/*.test.mjs
 ```
 
-当前校验检查主题数量、必需文档与 token 顶层字段、主题名称、部分技能元数据及插件清单。它不渲染最终作品，也不替代实际使用中的可读性检查。
+当前校验检查主题数量、必需文档与 token 顶层字段、主题名称、部分技能元数据及插件清单；`scripts/publish-dist.mjs` 重建干净分发时会在分发目录里再跑一次同样的校验，`test/publish-dist.test.mjs` 额外确认分发不带 `.git/` 且重建会清掉旧内容。校验不渲染最终作品，也不替代实际使用中的可读性检查。
 
 ## 参与与许可
 
