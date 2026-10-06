@@ -28,7 +28,7 @@ test('publish-dist builds a clean distribution and re-validates it in place', ()
     assert.equal(verify.status, 0, verify.stderr || verify.stdout);
     assert.equal(JSON.parse(verify.stdout).themeCount, 28);
 
-    // 重建必须清掉旧内容，避免新旧混合冒充当前版本
+    // 重建必须清掉旧内容，避免新旧文件混在一起冒充当前版本
     fs.writeFileSync(path.join(result.dist, 'stale.txt'), 'stale');
     const again = publishDist({target, quiet: true});
     assert.equal(fs.existsSync(path.join(again.dist, 'stale.txt')), false);
@@ -40,6 +40,27 @@ test('publish-dist builds a clean distribution and re-validates it in place', ()
 test('publish-dist refuses to write a distribution inside the checkout', () => {
   assert.throws(() => publishDist({target: repoRoot, quiet: true}), /refusing to publish inside the checkout/);
   assert.throws(() => publishDist({target: TEST_TEMP, quiet: true}), /refusing to publish inside the checkout/);
+});
+
+test('publish-dist refuses a symlinked target before any replacement', (t) => {
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'theme-publish-link-'));
+  const victim = path.join(tempRoot, 'victim');
+  const linkedTarget = path.join(tempRoot, 'linked-target');
+  fs.mkdirSync(victim, {recursive: true});
+  const sentinel = path.join(victim, 'keep.txt');
+  fs.writeFileSync(sentinel, 'keep');
+  try {
+    try {
+      fs.symlinkSync(victim, linkedTarget, process.platform === 'win32' ? 'junction' : 'dir');
+    } catch (error) {
+      t.skip(`directory links unavailable: ${error.message}`);
+      return;
+    }
+    assert.throws(() => publishDist({target: linkedTarget, quiet: true}), /refusing symlinked path component/);
+    assert.equal(fs.readFileSync(sentinel, 'utf8'), 'keep');
+  } finally {
+    fs.rmSync(tempRoot, {recursive: true, force: true});
+  }
 });
 
 test('publish-dist CLI reports unknown options and prints usage on demand', () => {
