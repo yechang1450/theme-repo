@@ -2,6 +2,8 @@
 
 28 个主题 + theme-color 统一取色入口，面向界面、图表、文档与视觉作品；提供可组合的五行配色与玻璃拟态设计变量。
 
+> Project docs / 项目规范： [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · [Issue templates](.github/ISSUE_TEMPLATE) · [Pull request template](.github/pull_request_template.md)
+
 [English](docs/README.md) · [统一取色入口](skills/theme-color/SKILL.md) · [自动校验](https://github.com/yechang1450/theme-repo/actions/workflows/validate.yml)
 
 每个主题提供设计 token（可复用的颜色、渐变、面板和玻璃效果参数）、说明和图标。Codex 可通过 skill（指导智能体完成特定任务的说明文件）选择和使用这些资源；其他工具也可以直接读取 Markdown 和 JSON 文件，再映射到已有样式变量或色板。
