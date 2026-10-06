@@ -62,6 +62,7 @@ export function assertNoLinksRecursively(root, {skipNames = new Set()} = {}) {
 }
 
 export function requireRegularFile(file) {
+  assertPathHasNoLinks(file);
   const stat = statOrNull(file);
   if (!stat) throw new Error('missing required file');
   if (stat.isSymbolicLink()) throw new Error('required file must not be a symlink');
