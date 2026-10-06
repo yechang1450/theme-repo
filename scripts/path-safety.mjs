@@ -70,14 +70,25 @@ export function requireRegularFile(file) {
   return file;
 }
 
+function canonicalCandidate(target) {
+  let current = path.resolve(target);
+  const missing = [];
+  while (!statOrNull(current)) {
+    const parent = path.dirname(current);
+    if (parent === current) throw new Error(`cannot resolve destination parent: ${target}`);
+    missing.unshift(path.basename(current));
+    current = parent;
+  }
+  let resolved = fs.realpathSync(current);
+  for (const segment of missing) resolved = path.join(resolved, segment);
+  return resolved;
+}
+
 export function assertOutsideCheckout(checkout, candidate) {
   const checkoutReal = fs.realpathSync(checkout);
-  const candidatePath = path.resolve(candidate);
-  const candidateReal = fs.existsSync(candidatePath)
-    ? fs.realpathSync(candidatePath)
-    : path.join(fs.realpathSync(path.dirname(candidatePath)), path.basename(candidatePath));
+  const candidateReal = canonicalCandidate(candidate);
   if (isWithin(checkoutReal, candidateReal)) {
-    throw new Error(`refusing to publish inside the checkout: ${candidatePath}`);
+    throw new Error(`refusing to publish inside the checkout: ${path.resolve(candidate)}`);
   }
   return candidateReal;
 }
