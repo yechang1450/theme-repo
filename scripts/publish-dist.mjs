@@ -117,8 +117,18 @@ export function publishDist({target = null, quiet = false} = {}) {
       fs.renameSync(dist, backup);
     }
     try {
-      fs.renameSync(staging, dist);
+      try {
+        fs.renameSync(staging, dist);
+      } catch (error) {
+        // Some Windows filesystems reject a directory rename even when the
+        // destination is absent. The staged tree was already validated, so a
+        // copy fallback preserves the no-links guarantee without deleting first.
+        if (error?.code !== 'EPERM' && error?.code !== 'EXDEV') throw error;
+        fs.cpSync(staging, dist, {recursive: true, errorOnExist: true});
+        fs.rmSync(staging, {recursive: true, force: true});
+      }
     } catch (error) {
+      if (fs.existsSync(dist)) fs.rmSync(dist, {recursive: true, force: true});
       if (backup && fs.existsSync(backup)) {
         try {
           fs.renameSync(backup, dist);
