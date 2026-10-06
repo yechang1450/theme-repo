@@ -73,6 +73,8 @@ function copyFilter(source) {
 }
 
 function moveDirectory(source, destination) {
+  assertPathHasNoLinks(source);
+  assertPathHasNoLinks(path.dirname(destination));
   try {
     fs.renameSync(source, destination);
     return;
@@ -105,15 +107,19 @@ export function publishDist({target = null, quiet = false} = {}) {
   const manifestPath = path.join(root, '.codex-plugin', 'plugin.json');
   requireRegularFile(manifestPath);
   const pluginName = JSON.parse(fs.readFileSync(manifestPath, 'utf8')).name;
+  if (pluginName !== 'theme-repo' || !/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(pluginName)) {
+    throw new Error(`refusing unsafe plugin name: ${JSON.stringify(pluginName)}`);
+  }
   const resolvedTarget = path.resolve(target || defaultDistRoot(root));
   const dist = path.join(resolvedTarget, pluginName);
 
   // 在创建或删除任何内容前，拒绝目标路径中的链接，并用规范路径检查工作树边界。
   assertPathHasNoLinks(resolvedTarget);
+  assertOutsideCheckout(root, dist);
+  assertNoLinksRecursively(root, {skipNames: EXCLUDED});
   fs.mkdirSync(resolvedTarget, {recursive: true});
   assertPathHasNoLinks(resolvedTarget);
   assertOutsideCheckout(root, dist);
-  assertNoLinksRecursively(root, {skipNames: EXCLUDED});
 
   // 在目标父目录下构建，校验通过后再替换现有分发，避免旧目录删除失败时留下半成品。
   const stagingParent = fs.mkdtempSync(path.join(resolvedTarget, `.${pluginName}.staging-`));
@@ -143,9 +149,13 @@ export function publishDist({target = null, quiet = false} = {}) {
       assertNoLinksRecursively(dist);
       backupParent = fs.mkdtempSync(path.join(resolvedTarget, `.${pluginName}.previous-`));
       backup = path.join(backupParent, pluginName);
+      assertPathHasNoLinks(resolvedTarget);
+      assertOutsideCheckout(root, dist);
       moveDirectory(dist, backup);
     }
     try {
+      assertPathHasNoLinks(resolvedTarget);
+      assertOutsideCheckout(root, dist);
       moveDirectory(staging, dist);
     } catch (error) {
       if (backup && fs.existsSync(backup)) {
@@ -162,12 +172,16 @@ export function publishDist({target = null, quiet = false} = {}) {
     }
     if (backupParent) {
       try {
+        assertPathHasNoLinks(resolvedTarget);
+        assertOutsideCheckout(root, backupParent);
+        assertNoLinksRecursively(backupParent);
         fs.rmSync(backupParent, {recursive: true, force: true});
+        backupParent = null;
+        backup = null;
       } catch {
-        // A retained, link-free backup is safe to remove on a later invocation.
+        preserveBackup = true;
+        // Leave a backup in place if the target path changed during cleanup.
       }
-      backupParent = null;
-      backup = null;
     }
 
     const result = {
@@ -188,13 +202,22 @@ export function publishDist({target = null, quiet = false} = {}) {
   } finally {
     if (!preserveBackup && backupParent && fs.existsSync(backupParent)) {
       try {
+        assertPathHasNoLinks(resolvedTarget);
+        assertOutsideCheckout(root, backupParent);
+        assertNoLinksRecursively(backupParent);
         fs.rmSync(backupParent, {recursive: true, force: true});
       } catch {
-        // Preserve the original error and leave only disposable staging state.
+        // Preserve the original error and leave the backup for later cleanup.
       }
     }
     if (fs.existsSync(stagingParent)) {
-      fs.rmSync(stagingParent, {recursive: true, force: true});
+      try {
+        assertPathHasNoLinks(resolvedTarget);
+        assertNoLinksRecursively(stagingParent);
+        fs.rmSync(stagingParent, {recursive: true, force: true});
+      } catch {
+        // Preserve the original error and leave the staging directory for review.
+      }
     }
   }
 }
