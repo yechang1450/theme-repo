@@ -92,6 +92,7 @@ export function publishDist({target = null, quiet = false} = {}) {
   let backupParent = null;
   let backup = null;
   let preserveBackup = false;
+  let fallbackCreated = false;
   try {
     fs.cpSync(root, staging, {
       recursive: true,
@@ -109,8 +110,8 @@ export function publishDist({target = null, quiet = false} = {}) {
     }
     const report = JSON.parse(String(verify.stdout).trim());
 
+    assertPathHasNoLinks(dist);
     if (fs.existsSync(dist)) {
-      assertPathHasNoLinks(dist);
       assertNoLinksRecursively(dist);
       backupParent = fs.mkdtempSync(path.join(resolvedTarget, `.${pluginName}.previous-`));
       backup = path.join(backupParent, pluginName);
@@ -124,11 +125,13 @@ export function publishDist({target = null, quiet = false} = {}) {
         // destination is absent. The staged tree was already validated, so a
         // copy fallback preserves the no-links guarantee without deleting first.
         if (error?.code !== 'EPERM' && error?.code !== 'EXDEV') throw error;
-        fs.cpSync(staging, dist, {recursive: true, errorOnExist: true});
+        fs.mkdirSync(dist);
+        fallbackCreated = true;
+        fs.cpSync(staging, dist, {recursive: true});
         fs.rmSync(staging, {recursive: true, force: true});
       }
     } catch (error) {
-      if (fs.existsSync(dist)) fs.rmSync(dist, {recursive: true, force: true});
+      if (fallbackCreated && fs.existsSync(dist)) fs.rmSync(dist, {recursive: true, force: true});
       if (backup && fs.existsSync(backup)) {
         try {
           fs.renameSync(backup, dist);
