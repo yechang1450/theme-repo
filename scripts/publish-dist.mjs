@@ -91,6 +91,7 @@ export function publishDist({target = null, quiet = false} = {}) {
   const staging = path.join(stagingParent, pluginName);
   let backupParent = null;
   let backup = null;
+  let preserveBackup = false;
   try {
     fs.cpSync(root, staging, {
       recursive: true,
@@ -124,6 +125,7 @@ export function publishDist({target = null, quiet = false} = {}) {
           backup = null;
           backupParent = null;
         } catch {
+          preserveBackup = true;
           // Keep the backup if restoration itself fails.
         }
       }
@@ -155,7 +157,7 @@ export function publishDist({target = null, quiet = false} = {}) {
     }
     return result;
   } finally {
-    if (backupParent && fs.existsSync(backupParent)) {
+    if (!preserveBackup && backupParent && fs.existsSync(backupParent)) {
       try {
         fs.rmSync(backupParent, {recursive: true, force: true});
       } catch {
