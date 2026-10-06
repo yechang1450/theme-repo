@@ -20,7 +20,7 @@ test('path safety rejects linked files and directories', (t) => {
       t.skip(`links unavailable: ${error.message}`);
       return;
     }
-    assert.throws(() => requireRegularFile(linkedFile), /must not be a symlink/);
+    assert.throws(() => requireRegularFile(linkedFile), /symlinked path component|must not be a symlink/);
     assert.throws(() => assertNoLinksRecursively(tempRoot), /symlinked path/);
   } finally {
     fs.rmSync(tempRoot, {recursive: true, force: true});
