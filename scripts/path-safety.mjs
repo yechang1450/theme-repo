@@ -76,7 +76,7 @@ export function assertOutsideCheckout(checkout, candidate) {
     ? fs.realpathSync(candidatePath)
     : path.join(fs.realpathSync(path.dirname(candidatePath)), path.basename(candidatePath));
   if (isWithin(checkoutReal, candidateReal)) {
-    throw new Error(`refusing destination inside the checkout: ${candidatePath}`);
+    throw new Error(`refusing to publish inside the checkout: ${candidatePath}`);
   }
   return candidateReal;
 }
