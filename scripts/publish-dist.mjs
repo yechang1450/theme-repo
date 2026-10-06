@@ -118,7 +118,15 @@ export function publishDist({target = null, quiet = false} = {}) {
     try {
       fs.renameSync(staging, dist);
     } catch (error) {
-      if (backup && fs.existsSync(backup)) fs.renameSync(backup, dist);
+      if (backup && fs.existsSync(backup)) {
+        try {
+          fs.renameSync(backup, dist);
+          backup = null;
+          backupParent = null;
+        } catch {
+          // Keep the backup if restoration itself fails.
+        }
+      }
       throw error;
     }
     if (backupParent) {
