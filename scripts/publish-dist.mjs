@@ -73,6 +73,7 @@ function copyFilter(source) {
 }
 
 function moveDirectory(source, destination) {
+  assertPathHasNoLinks(destination);
   assertPathHasNoLinks(source);
   assertPathHasNoLinks(path.dirname(destination));
   try {
