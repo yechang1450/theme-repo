@@ -10,7 +10,7 @@
  *   node scripts/publish-dist.mjs [--target <分发根>] [--quiet]
  *
  * 行为：
- *   1) 删除旧分发目录（避免新旧混合），再按排除清单复制当前工作树；
+ *   1) 在私有临时目录构建并校验，再原子替换旧分发目录；
  *   2) 在分发里跑主题校验（分发自校验），失败即返回非零；
  *   3) 打印分发路径和后续安装命令。
  */
@@ -18,6 +18,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
+import {
+  assertNoLinksRecursively,
+  assertOutsideCheckout,
+  assertPathHasNoLinks,
+  requireRegularFile,
+} from './path-safety.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const EXCLUDED = new Set(['.git', 'dist', 'node_modules', 'temp', '.plugin-eval']);
@@ -50,42 +56,108 @@ function countFiles(dir) {
   return total;
 }
 
+function isExcludedSource(source) {
+  const relative = path.relative(root, source);
+  return relative !== ''
+    && relative.split(path.sep).some((segment) => EXCLUDED.has(segment));
+}
+
+function copyFilter(source) {
+  if (isExcludedSource(source)) return false;
+  const stat = fs.lstatSync(source);
+  if (stat.isSymbolicLink()) throw new Error(`refusing symlinked source path: ${source}`);
+  if (!stat.isDirectory() && !stat.isFile()) {
+    throw new Error(`refusing non-regular source path: ${source}`);
+  }
+  return true;
+}
+
 export function publishDist({target = null, quiet = false} = {}) {
-  const pluginName = JSON.parse(fs.readFileSync(path.join(root, '.codex-plugin', 'plugin.json'), 'utf8')).name;
+  const manifestPath = path.join(root, '.codex-plugin', 'plugin.json');
+  requireRegularFile(manifestPath);
+  const pluginName = JSON.parse(fs.readFileSync(manifestPath, 'utf8')).name;
   const resolvedTarget = path.resolve(target || defaultDistRoot(root));
   const dist = path.join(resolvedTarget, pluginName);
-  // 分发目录必须落在工作树之外：否则要么自拷贝报错，要么把生成目录混进仓库。
-  const insideRoot = path.relative(root, path.resolve(dist));
-  if (!insideRoot.startsWith('..') && !path.isAbsolute(insideRoot)) {
-    throw new Error(`refusing to publish inside the checkout: ${dist} (choose a target outside ${root})`);
-  }
+
+  // 在创建或删除任何内容前，拒绝目标路径中的链接，并用规范路径检查工作树边界。
+  assertPathHasNoLinks(resolvedTarget);
   fs.mkdirSync(resolvedTarget, {recursive: true});
-  // 先删旧分发再重建，避免新旧文件混在一起冒充当前版本。
-  fs.rmSync(dist, {recursive: true, force: true});
-  fs.cpSync(root, dist, {
-    recursive: true,
-    filter: (source) => !EXCLUDED.has(path.basename(source)),
-  });
-  const verify = spawnSync(process.execPath, [path.join(dist, 'scripts', 'validate-themes.mjs')], {encoding: 'utf8', windowsHide: true, cwd: dist});
-  if (verify.status !== 0) {
-    throw new Error('distribution theme validation failed: ' + (verify.stderr || verify.stdout || 'exit ' + verify.status).trim());
+  assertPathHasNoLinks(resolvedTarget);
+  assertOutsideCheckout(root, dist);
+  assertNoLinksRecursively(root, {skipNames: EXCLUDED});
+
+  // 在目标父目录下构建，校验通过后再替换现有分发，避免旧目录删除失败时留下半成品。
+  const stagingParent = fs.mkdtempSync(path.join(resolvedTarget, `.${pluginName}.staging-`));
+  const staging = path.join(stagingParent, pluginName);
+  let backupParent = null;
+  let backup = null;
+  try {
+    fs.cpSync(root, staging, {
+      recursive: true,
+      filter: copyFilter,
+    });
+    assertNoLinksRecursively(staging);
+
+    const verify = spawnSync(process.execPath, [path.join(staging, 'scripts', 'validate-themes.mjs')], {
+      encoding: 'utf8',
+      windowsHide: true,
+      cwd: staging,
+    });
+    if (verify.status !== 0) {
+      throw new Error('distribution theme validation failed: ' + (verify.stderr || verify.stdout || 'exit ' + verify.status).trim());
+    }
+    const report = JSON.parse(String(verify.stdout).trim());
+
+    if (fs.existsSync(dist)) {
+      assertPathHasNoLinks(dist);
+      assertNoLinksRecursively(dist);
+      backupParent = fs.mkdtempSync(path.join(resolvedTarget, `.${pluginName}.previous-`));
+      backup = path.join(backupParent, pluginName);
+      fs.renameSync(dist, backup);
+    }
+    try {
+      fs.renameSync(staging, dist);
+    } catch (error) {
+      if (backup && fs.existsSync(backup)) fs.renameSync(backup, dist);
+      throw error;
+    }
+    if (backupParent) {
+      try {
+        fs.rmSync(backupParent, {recursive: true, force: true});
+      } catch {
+        // A retained, link-free backup is safe to remove on a later invocation.
+      }
+      backupParent = null;
+      backup = null;
+    }
+
+    const result = {
+      dist,
+      target: resolvedTarget,
+      pluginName,
+      files: countFiles(dist),
+      themes: report.themeCount,
+      sharedEntries: report.sharedEntries,
+      manifestValid: report.manifestValid,
+      install: 'codex plugin add ' + pluginName + '@personal',
+    };
+    if (!quiet) {
+      console.log(`[publish-dist] ${dist} (${result.files} files, ${result.themes} themes + ${report.sharedEntries.join(', ')})`);
+      console.log(`[publish-dist] next: ${result.install}`);
+    }
+    return result;
+  } finally {
+    if (backupParent && fs.existsSync(backupParent)) {
+      try {
+        fs.rmSync(backupParent, {recursive: true, force: true});
+      } catch {
+        // Preserve the original error and leave only disposable staging state.
+      }
+    }
+    if (fs.existsSync(stagingParent)) {
+      fs.rmSync(stagingParent, {recursive: true, force: true});
+    }
   }
-  const report = JSON.parse(String(verify.stdout).trim());
-  const result = {
-    dist,
-    target: resolvedTarget,
-    pluginName,
-    files: countFiles(dist),
-    themes: report.themeCount,
-    sharedEntries: report.sharedEntries,
-    manifestValid: report.manifestValid,
-    install: 'codex plugin add ' + pluginName + '@personal',
-  };
-  if (!quiet) {
-    console.log(`[publish-dist] ${dist} (${result.files} files, ${result.themes} themes + ${report.sharedEntries.join(', ')})`);
-    console.log(`[publish-dist] next: ${result.install}`);
-  }
-  return result;
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url))) {
