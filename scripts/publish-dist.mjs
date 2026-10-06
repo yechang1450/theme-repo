@@ -83,11 +83,20 @@ function moveDirectory(source, destination) {
   // Reserve the destination before copying so a pre-existing path is never
   // removed as part of the fallback.
   fs.mkdirSync(destination);
+  const marker = path.join(destination, `.codex-publish-${process.pid}-${Date.now()}-${Math.random().toString(16).slice(2)}`);
+  fs.writeFileSync(marker, 'reserved', {flag: 'wx'});
   try {
     fs.cpSync(source, destination, {recursive: true});
+    fs.rmSync(marker, {force: true});
     fs.rmSync(source, {recursive: true, force: true});
   } catch (error) {
-    fs.rmSync(destination, {recursive: true, force: true});
+    try {
+      if (fs.readFileSync(marker, 'utf8') === 'reserved') {
+        fs.rmSync(destination, {recursive: true, force: true});
+      }
+    } catch {
+      // Leave an unowned destination untouched if another actor replaced it.
+    }
     throw error;
   }
 }
