@@ -72,6 +72,26 @@ function copyFilter(source) {
   return true;
 }
 
+function moveDirectory(source, destination) {
+  try {
+    fs.renameSync(source, destination);
+    return;
+  } catch (error) {
+    if (error?.code !== 'EPERM' && error?.code !== 'EXDEV') throw error;
+  }
+
+  // Reserve the destination before copying so a pre-existing path is never
+  // removed as part of the fallback.
+  fs.mkdirSync(destination);
+  try {
+    fs.cpSync(source, destination, {recursive: true});
+    fs.rmSync(source, {recursive: true, force: true});
+  } catch (error) {
+    fs.rmSync(destination, {recursive: true, force: true});
+    throw error;
+  }
+}
+
 export function publishDist({target = null, quiet = false} = {}) {
   const manifestPath = path.join(root, '.codex-plugin', 'plugin.json');
   requireRegularFile(manifestPath);
@@ -92,7 +112,6 @@ export function publishDist({target = null, quiet = false} = {}) {
   let backupParent = null;
   let backup = null;
   let preserveBackup = false;
-  let fallbackCreated = false;
   try {
     fs.cpSync(root, staging, {
       recursive: true,
@@ -115,26 +134,14 @@ export function publishDist({target = null, quiet = false} = {}) {
       assertNoLinksRecursively(dist);
       backupParent = fs.mkdtempSync(path.join(resolvedTarget, `.${pluginName}.previous-`));
       backup = path.join(backupParent, pluginName);
-      fs.renameSync(dist, backup);
+      moveDirectory(dist, backup);
     }
     try {
-      try {
-        fs.renameSync(staging, dist);
-      } catch (error) {
-        // Some Windows filesystems reject a directory rename even when the
-        // destination is absent. The staged tree was already validated, so a
-        // copy fallback preserves the no-links guarantee without deleting first.
-        if (error?.code !== 'EPERM' && error?.code !== 'EXDEV') throw error;
-        fs.mkdirSync(dist);
-        fallbackCreated = true;
-        fs.cpSync(staging, dist, {recursive: true});
-        fs.rmSync(staging, {recursive: true, force: true});
-      }
+      moveDirectory(staging, dist);
     } catch (error) {
-      if (fallbackCreated && fs.existsSync(dist)) fs.rmSync(dist, {recursive: true, force: true});
       if (backup && fs.existsSync(backup)) {
         try {
-          fs.renameSync(backup, dist);
+          moveDirectory(backup, dist);
           backup = null;
           backupParent = null;
         } catch {
