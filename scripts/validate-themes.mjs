@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { assertNoLinksRecursively, requireRegularFile } from './path-safety.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const skillsRoot = path.join(repoRoot, 'skills');
@@ -18,18 +19,30 @@ const requiredTokenFields = [
   'radius',
 ];
 
-const entries = fs.readdirSync(skillsRoot, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory())
-  .map((entry) => entry.name)
-  .sort((a, b) => a.localeCompare(b));
+const invalid = [];
+let skillsSafe = true;
+try {
+  assertNoLinksRecursively(skillsRoot);
+} catch (error) {
+  skillsSafe = false;
+  invalid.push(`skills: ${error.message}`);
+}
+
+const entries = skillsSafe
+  ? fs.readdirSync(skillsRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b))
+  : [];
 
 const sharedEntries = entries.filter((name) => name === 'theme-color');
 const themeNames = entries.filter((name) => name !== 'theme-color');
-const invalid = [];
 
 let manifestValid = false;
 try {
-  const manifest = JSON.parse(fs.readFileSync(path.join(repoRoot, '.codex-plugin', 'plugin.json'), 'utf8'));
+  const manifestPath = path.join(repoRoot, '.codex-plugin', 'plugin.json');
+  requireRegularFile(manifestPath);
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
   manifestValid = Boolean(manifest.name === 'theme-repo'
     && manifest.version
     && manifest.license === 'MIT'
@@ -40,7 +53,7 @@ try {
     && manifest.interface?.termsOfServiceURL?.endsWith('/docs/terms.md'));
   if (!manifestValid) invalid.push('plugin.json: public metadata is incomplete or inconsistent');
 } catch (error) {
-  invalid.push(`plugin.json: invalid JSON (${error.message})`);
+  invalid.push(`plugin.json: invalid or unsafe file (${error.message})`);
 }
 
 let metadataCount = 0;
@@ -48,13 +61,16 @@ let metadataCount = 0;
 for (const name of themeNames) {
   const themeRoot = path.join(skillsRoot, name);
   for (const relativePath of requiredFiles) {
-    if (!fs.statSync(path.join(themeRoot, relativePath), { throwIfNoEntry: false })?.isFile()) {
-      invalid.push(`${name}: missing ${relativePath}`);
+    try {
+      requireRegularFile(path.join(themeRoot, relativePath));
+    } catch (error) {
+      invalid.push(`${name}: ${relativePath} (${error.message})`);
     }
   }
 
   const tokenFile = path.join(themeRoot, 'tokens.json');
   try {
+    requireRegularFile(tokenFile);
     const tokens = JSON.parse(fs.readFileSync(tokenFile, 'utf8'));
     for (const field of requiredTokenFields) {
       if (!(field in tokens)) invalid.push(`${name}: missing token field ${field}`);
@@ -64,16 +80,22 @@ for (const name of themeNames) {
       invalid.push(`${name}: elements must be a non-empty array`);
     }
   } catch (error) {
-    invalid.push(`${name}: invalid tokens.json (${error.message})`);
+    invalid.push(`${name}: invalid or unsafe tokens.json (${error.message})`);
   }
 
-  const metadata = fs.readFileSync(path.join(themeRoot, 'agents', 'openai.yaml'), 'utf8');
-  const expectedPrompt = `default_prompt: "Use $theme-repo:${name} to apply this theme to a frontend project."`;
-  if (!metadata.includes(expectedPrompt)) invalid.push(`${name}: default_prompt does not match directory name`);
-  if (!metadata.includes('icon_small: "./assets/icon.png"') || !metadata.includes('icon_large: "./assets/icon.svg"')) {
-    invalid.push(`${name}: icon metadata is incomplete`);
+  const metadataFile = path.join(themeRoot, 'agents', 'openai.yaml');
+  try {
+    requireRegularFile(metadataFile);
+    const metadata = fs.readFileSync(metadataFile, 'utf8');
+    const expectedPrompt = `default_prompt: "Use $theme-repo:${name} to apply this theme to a frontend project."`;
+    if (!metadata.includes(expectedPrompt)) invalid.push(`${name}: default_prompt does not match directory name`);
+    if (!metadata.includes('icon_small: "./assets/icon.png"') || !metadata.includes('icon_large: "./assets/icon.svg"')) {
+      invalid.push(`${name}: icon metadata is incomplete`);
+    }
+    metadataCount += 1;
+  } catch (error) {
+    invalid.push(`${name}: invalid or unsafe agents/openai.yaml (${error.message})`);
   }
-  metadataCount += 1;
 }
 
 const report = {
