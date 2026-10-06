@@ -19,20 +19,24 @@ const requiredTokenFields = [
   'radius',
 ];
 
-const entries = fs.readdirSync(skillsRoot, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory())
-  .map((entry) => entry.name)
-  .sort((a, b) => a.localeCompare(b));
-
-const sharedEntries = entries.filter((name) => name === 'theme-color');
-const themeNames = entries.filter((name) => name !== 'theme-color');
 const invalid = [];
-
+let skillsSafe = true;
 try {
   assertNoLinksRecursively(skillsRoot);
 } catch (error) {
+  skillsSafe = false;
   invalid.push(`skills: ${error.message}`);
 }
+
+const entries = skillsSafe
+  ? fs.readdirSync(skillsRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b))
+  : [];
+
+const sharedEntries = entries.filter((name) => name === 'theme-color');
+const themeNames = entries.filter((name) => name !== 'theme-color');
 
 let manifestValid = false;
 try {
