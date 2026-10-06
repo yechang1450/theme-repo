@@ -70,11 +70,11 @@ export function requireRegularFile(file) {
 }
 
 export function assertOutsideCheckout(checkout, candidate) {
-  const checkoutReal = fs.realpathSync.native(checkout);
+  const checkoutReal = fs.realpathSync(checkout);
   const candidatePath = path.resolve(candidate);
   const candidateReal = fs.existsSync(candidatePath)
-    ? fs.realpathSync.native(candidatePath)
-    : path.join(fs.realpathSync.native(path.dirname(candidatePath)), path.basename(candidatePath));
+    ? fs.realpathSync(candidatePath)
+    : path.join(fs.realpathSync(path.dirname(candidatePath)), path.basename(candidatePath));
   if (isWithin(checkoutReal, candidateReal)) {
     throw new Error(`refusing destination inside the checkout: ${candidatePath}`);
   }
