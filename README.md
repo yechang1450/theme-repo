@@ -1,20 +1,16 @@
 # theme-repo
 
-28 个主题 + theme-color 统一取色入口，面向界面、图表、文档与视觉作品；提供可组合的五行配色与玻璃拟态设计变量。
+28 个主题 + `theme-color` 统一取色入口，面向界面、图表、文档与视觉作品；提供可组合的五行配色与玻璃拟态设计 token。
 
-> Project docs / 项目规范： [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · [Issue templates](.github/ISSUE_TEMPLATE) · [Pull request template](.github/pull_request_template.md)
+> [English](docs/README.md) · [theme-color 取色入口](skills/theme-color/SKILL.md) · [自动校验](https://github.com/yechang1450/theme-repo/actions/workflows/validate.yml) · [贡献指南](CONTRIBUTING.md) · [安全报告](SECURITY.md) · [行为准则](CODE_OF_CONDUCT.md)
 
-[English](docs/README.md) · [统一取色入口](skills/theme-color/SKILL.md) · [自动校验](https://github.com/yechang1450/theme-repo/actions/workflows/validate.yml)
-
-每个主题提供设计 token（可复用的颜色、渐变、面板和玻璃效果参数）、说明和图标。Codex 可通过 skill（指导智能体完成特定任务的说明文件）选择和使用这些资源；其他工具也可以直接读取 Markdown 和 JSON 文件，再映射到已有样式变量或色板。
+每个主题是一个独立 skill（指导智能体完成特定任务的说明文件），含设计 token、设计说明与图标。Codex 通过 skill 选择使用；其他工具可直接读取 Markdown 和 JSON 文件，再映射到已有样式变量或色板。
 
 ## 使用
 
 ### 在 Codex 中使用
 
 已安装该插件时，先使用 [theme-color](skills/theme-color/SKILL.md) 选择或组合配色，再读取选中主题的 `SKILL.md`、`THEME.md` 和 `tokens.json`。无需提前指定主题名。
-
-示例请求：
 
 ```text
 使用 theme-repo 为当前页面选择配色，保留现有布局和品牌色。
@@ -24,22 +20,21 @@
 
 ### 在 Codex 中安装（插件管理器）
 
-主题技能要在新对话里自动加载，需要先注册进 Codex 的插件管理器。个人 marketplace 文件位于 `<home>/.agents/plugins/marketplace.json`（Codex 隐式发现），条目指向**干净分发**而不是工作树——管理器会把插件目录整体复制进安装缓存，指向工作树会连 `.git/` 一起复制（本机实测：theme-repo 的缓存因此多出约 2.8 MB 的 Git 元数据）。
+主题技能要在新对话里自动加载，需要先注册进 Codex 的插件管理器：
 
 ```powershell
-& {
-  $ErrorActionPreference = 'Stop'
-  $Repo = Join-Path $HOME 'plugins\theme-repo'       # 你的克隆位置；首次安装时改为 git clone
-  git -C $Repo pull --ff-only
-  if ($LASTEXITCODE -ne 0) { throw '更新失败。' }
-  node (Join-Path $Repo 'scripts/publish-dist.mjs')  # 重建 <克隆父目录>/dist/theme-repo 并自校验
-  if ($LASTEXITCODE -ne 0) { throw '分发重建失败。' }
-  codex plugin add theme-repo@personal               # 注册并安装
-  if ($LASTEXITCODE -ne 0) { throw '安装失败。' }
-}
+$Repo = Join-Path $HOME 'plugins\theme-repo'       # 你的克隆位置；首次安装时改为 git clone
+git -C $Repo pull --ff-only
+node (Join-Path $Repo 'scripts/publish-dist.mjs')  # 重建 <克隆父目录>/dist/theme-repo 并自校验
+codex plugin add theme-repo@personal               # 注册并安装
 ```
 
-首次安装时 marketplace 文件可能还不存在，至少要包含本插件条目（`source.path` 相对 `<home>` 解析，不是相对 `marketplace.json` 所在目录）：
+marketplace 条目（`<home>/.agents/plugins/marketplace.json`，Codex 隐式发现）必须指向**干净分发**而不是工作树——管理器会把插件目录整体复制进安装缓存，指向工作树会连 `.git/` 一起复制（实测多出约 2.8 MB Git 元数据）。
+
+<details>
+<summary>首次安装的 marketplace 最小条目 + 逐条检查退出码的一键脚本</summary>
+
+首次安装时 marketplace 文件可能还不存在，至少要包含本条目（`source.path` 相对 `<home>` 解析，不是相对 `marketplace.json` 所在目录）：
 
 ```json
 {
@@ -56,16 +51,32 @@
 }
 ```
 
-装完后**新开一个 Codex 对话**技能才会加载；`codex plugin list` 里应显示 `theme-repo@personal  installed, enabled`。
+首次安装的一次性脚本（任一步失败即停）：
+
+```powershell
+& {
+  $ErrorActionPreference = 'Stop'
+  $Repo = Join-Path $HOME 'plugins\theme-repo'
+  git -C $Repo pull --ff-only
+  if ($LASTEXITCODE -ne 0) { throw '更新失败。' }
+  node (Join-Path $Repo 'scripts/publish-dist.mjs')
+  if ($LASTEXITCODE -ne 0) { throw '分发重建失败。' }
+  codex plugin add theme-repo@personal
+  if ($LASTEXITCODE -ne 0) { throw '安装失败。' }
+}
+```
+
+</details>
+
+装完后**新开一个 Codex 对话**技能才会加载；`codex plugin list` 里应显示 `theme-repo@personal  installed, enabled`。换机器或换克隆位置时，重建分发并重跑 `codex plugin add theme-repo@personal`（旧条目路径需先更新）。
 
 ### 直接读取主题文件
 
 ```sh
 git clone https://github.com/yechang1450/theme-repo.git
-cd theme-repo
 ```
 
-例如，[flame-soil 的说明](skills/flame-soil/THEME.md)和 [token 文件](skills/flame-soil/tokens.json)提供“火土成慈”配色。读取资源无需运行脚本或安装第三方依赖；上述命令只下载仓库，不会自动完成 Codex 插件安装。
+例如 [flame-soil 说明](skills/flame-soil/THEME.md)与 [tokens](skills/flame-soil/tokens.json)（“火土成慈”配色）。读取无需脚本或依赖；clone 只下载仓库，不会自动完成插件安装。
 
 ## 应用原则
 
@@ -107,19 +118,17 @@ cd theme-repo
 
 ## 本地校验
 
-维护者校验使用 Node.js，现有自动校验覆盖 Node.js 20 和 22。无需安装 npm 依赖，在仓库根目录执行：
+无需安装 npm 依赖，在仓库根目录执行（自动校验覆盖 Node.js 20 和 22）：
 
 ```sh
 node scripts/validate-themes.mjs
 node --test test/*.test.mjs
 ```
 
-当前校验检查主题数量、必需文档与 token 顶层字段、主题名称、部分技能元数据及插件清单；`scripts/publish-dist.mjs` 重建干净分发时会在分发目录里再跑一次同样的校验，`test/publish-dist.test.mjs` 额外确认分发不带 `.git/` 且重建会清掉旧内容。校验不渲染最终作品，也不替代实际使用中的可读性检查。
+校验覆盖主题数量、必需文档与 token 顶层字段、主题名称、技能元数据及插件清单；`publish-dist.mjs` 在分发里重跑同样校验，`test/publish-dist.test.mjs` 另确认分发不含 `.git/`、重建清除旧内容。校验不渲染作品，也不替代可读性检查。
 
 ## 参与与许可
 
-[贡献指南](CONTRIBUTING.md) · [问题反馈](https://github.com/yechang1450/theme-repo/issues) · [安全报告](SECURITY.md) · [变更记录](CHANGELOG.md)
+[贡献指南](CONTRIBUTING.md) · [问题反馈](https://github.com/yechang1450/theme-repo/issues) · [安全报告](SECURITY.md) · [变更记录](CHANGELOG.md) · [隐私说明](docs/privacy.md) · [使用条款](docs/terms.md)
 
 采用 [MIT License](LICENSE)。作者：[Yang Wenchàng](https://github.com/yechang1450)。
-
-[隐私说明](docs/privacy.md) · [使用条款](docs/terms.md)
