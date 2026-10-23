@@ -131,4 +131,10 @@ node --test test/*.test.mjs
 
 [贡献指南](CONTRIBUTING.md) · [问题反馈](https://github.com/yechang1450/theme-repo/issues) · [安全报告](SECURITY.md) · [变更记录](CHANGELOG.md) · [隐私说明](docs/privacy.md) · [使用条款](docs/terms.md)
 
-采用 [MIT License](LICENSE)。作者：[Yang Wenchàng](https://github.com/yechang1450)。
+## Copyright
+
+Copyright © 2026 yechang1450. All rights reserved.
+
+No additional license or permission is granted beyond rights provided by
+GitHub's Terms of Service or applicable law. Third-party components remain
+subject to their own license notices.

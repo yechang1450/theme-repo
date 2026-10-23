@@ -1,6 +1,10 @@
 # Terms of Use
 
-`theme-repo` is provided under the MIT License. You may use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software subject to the conditions in [`LICENSE`](../LICENSE).
+Copyright © 2026 yechang1450. All rights reserved.
+
+No additional license or permission is granted beyond rights provided by
+GitHub's Terms of Service or applicable law. Third-party components remain
+subject to their own license notices.
 
 Theme names, descriptions, and token values are provided as reusable design guidance. You are responsible for checking accessibility, brand requirements, and suitability for your own work.
 

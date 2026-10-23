@@ -15,4 +15,4 @@
 - [安全报告](../SECURITY.md)
 - [English README](README.md)
 
-[隐私说明](privacy.md) · [使用条款](terms.md) · [MIT License](../LICENSE)
+[隐私说明](privacy.md) · [使用条款](terms.md) · [版权声明](../README.md#copyright)

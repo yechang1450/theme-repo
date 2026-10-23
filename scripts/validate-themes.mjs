@@ -32,7 +32,7 @@ try {
   const manifest = JSON.parse(fs.readFileSync(path.join(repoRoot, '.codex-plugin', 'plugin.json'), 'utf8'));
   manifestValid = Boolean(manifest.name === 'theme-repo'
     && manifest.version
-    && manifest.license === 'MIT'
+    && manifest.license === 'UNLICENSED'
     && manifest.skills === './skills/'
     && manifest.homepage === 'https://github.com/yechang1450/theme-repo'
     && manifest.interface?.websiteURL === manifest.homepage

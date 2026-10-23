@@ -111,10 +111,14 @@ node --test test/*.test.mjs
 
 The checks cover theme counts, required documents and top-level token fields, theme names, selected skill metadata, and plugin manifest fields; `publish-dist.mjs` re-runs the same validation inside the clean distribution, and `test/publish-dist.test.mjs` additionally asserts that the distribution contains no `.git/` and that a rebuild removes stale files. They do not render designs or establish readability in the final work.
 
-## Contributing and license
+## Contributing and rights
 
 [Contributing](../CONTRIBUTING.md) · [Issues](https://github.com/yechang1450/theme-repo/issues) · [Security](../SECURITY.md) · [Changelog](../CHANGELOG.md) · [Code of Conduct](../CODE_OF_CONDUCT.md)
 
-Licensed under the [MIT License](../LICENSE). Author: [Yang Wenchàng](https://github.com/yechang1450).
+Copyright © 2026 yechang1450. All rights reserved.
+
+No additional license or permission is granted beyond rights provided by
+GitHub's Terms of Service or applicable law. Third-party components remain
+subject to their own license notices.
 
 [Privacy](privacy.md) · [Terms](terms.md)
